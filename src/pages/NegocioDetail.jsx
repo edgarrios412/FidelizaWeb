@@ -45,7 +45,7 @@ const NegocioDetail = () => {
                         className={`flex flex-col z-30 justify-center items-center w-full rounded-lg overflow-hidden py-3 my-3`}
                     >
                         <img
-                            source={{ uri: negocio.image }}
+                            src={negocio.image}
                             className={`h-28 w-28 border-4 border-white rounded-full`}
                         />
                         {/* <div className={`bg-transparent`}> */}
