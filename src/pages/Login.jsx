@@ -7,6 +7,7 @@ import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 import { ArrowRight } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import Spinner from "@/components/Spinner"
 
 const Login = () => {
 
@@ -14,6 +15,7 @@ const Login = () => {
     const [negocios, setNegocios] = useState([])
     const [phone, setPhone] = useState("")
     const { toast } = useToast()
+    const [loading, setLoading] = useState(false)
 
     const buscarUsuario = () => {
         if (phone.length < 10) {
@@ -23,7 +25,9 @@ const Login = () => {
                 title: "Ingresa un número válido",
             })
         }
-        axios.get("/negocio/byUserPhone/" + phone).then(({ data }) => setNegocios(data), (e) => {
+        setLoading(true)
+        axios.get("/negocio/byUserPhone/" + phone).then(({ data }) => {setNegocios(data);setLoading(false)}, (e) => {
+            setLoading(false)
             toast({
                 variant: "destructive",
                 title: e.response.data
@@ -71,15 +75,15 @@ const Login = () => {
                             <span className="text-slate-500">+57</span>
                             <input placeholder="3118268264" maxLength={10} value={phone} onChange={(e) => setPhone(e.target.value)} className="border-[1px] rounded-md border-gray-200 h-8 px-3 focus:outline-blue-200 w-full" />
                         </div>
-                        <button onClick={buscarUsuario} className="bg-blue-200 py-2 rounded-md mt-4 text-blue-600 font-bold text-base">Consultar puntos</button>
+                        <button onClick={buscarUsuario} className="bg-blue-200 py-2 rounded-md mt-4 text-blue-600 font-bold text-base flex flex-col items-center h-10">{loading ? <Spinner/> : "Consultar puntos"}</button>
                     </div>
                 </div>
             </div>
-            <div className="bg-[#f2f5ff] w-full px-6">
+            <div className="bg-[#f2f5ff] w-full px-4">
                 {negocios.length > 0 && negocios?.map(n => <div
                     key={n.id}
                     onClick={() => navigate("/negocio/"+n.id)}
-                    className="cursor-pointer pr-4 flex flex-row items-center justify-between gap-4 bg-white px-4 py-3 rounded-lg shadow-md"
+                    className="cursor-pointer pr-4 flex flex-row items-center justify-between gap-4 bg-white px-4 py-3 rounded-lg shadow-sm"
                 >
                     <div className="flex flex-row gap-4 items-center">
                         <img
