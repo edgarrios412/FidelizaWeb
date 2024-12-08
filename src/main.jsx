@@ -7,8 +7,8 @@ import axios from "axios";
 import { UserProvider } from "./utils/context/User/UserProvider.jsx";
 import { Toaster } from "./components/ui/toaster.jsx";
 
-// axios.defaults.baseURL = "https://fideliza-back.onrender.com";
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = "https://fideliza-back.onrender.com";
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
