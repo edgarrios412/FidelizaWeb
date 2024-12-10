@@ -116,10 +116,9 @@ const NavBar = () => {
                         </div>
 
                         {/* Footer fijo con total y botón */}
-                        {carrito.length > 0 && (
-                            <div className="sticky bottom-0 bg-white pt-4 pb-6 border-t border-gray-200">
+                        <div className="sticky bottom-0 bg-white pt-4 pb-6 border-t border-gray-200">
                                 <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
-                                <a
+                                {carrito.length > 0 ? <a
                                     href={`https://api.whatsapp.com/send/?phone=573118268264&text=Detalles del pedido%0A%0A${carrito.reduce(
                                         (acc, curr) => acc + `${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,
                                         ""
@@ -127,9 +126,8 @@ const NavBar = () => {
                                     target="_blank"
                                 >
                                     <Button className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>
-                                </a>
+                                </a>: <Button disabled className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>}
                             </div>
-                        )}
                     </SheetContent>
                 </Sheet>
             </div>
