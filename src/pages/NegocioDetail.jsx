@@ -173,7 +173,7 @@ const NegocioDetail = () => {
                     </span>}
                     <div className={`rounded-lg mb-6 w-full`}>
                         {/* <span className={`text-gray-500 mb-1`}>A continuación verás una lista de articulos o descuentos que puedes obtener con tus puntos acumulados</span> */}
-                        <div className={`flex flex-col gap-3 my-4`}>
+                        <div className={`flex flex-row gap-3 my-4`}>
                             {negocio?.products?.filter(p => !p.onlyClaimable).map(p => <div className="flex-col items-center max-w-40 lg:w-96 rounded-lg shadow-md bg-white dark:bg-[#262635] shadow-slate-200 dark:shadow-gray-900 pb-4">
                                     <div className="rounded-lg w-28 h-28 overflow-hidden m-auto">
                                         <img src={p.image} alt="Imagen" className="object-cover h-full m-auto" />
