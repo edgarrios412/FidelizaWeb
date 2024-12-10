@@ -64,26 +64,26 @@ const NegocioDetail = () => {
                         <a
                             target="_blank"
                             href={`https://wa.me/${negocio.countryCode}${negocio.phone}`}
-                            className={`cursor-pointer flex flex-row gap-1 justify-center items-center bg-green-200 rounded-lg px-3 py-1`}
+                            className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-green-200 rounded-lg px-3 py-1`}
                         >
                             {/* <Icon style={tw`text-xl text-[#7ACEFA]`} name="users" /> */}
                             <Mails
                                 size={16}
-                                color="#22c55e"
+                                color="green"
                             />
-                            <span className={`font-bold text-green-500 mt-0`}>Contactar</span>
+                            <span className={`font-semibold text-green-600 text-sm mt-0`}>Contactar</span>
                         </a>
                         <a
                             href={`https://wa.me/573118268264?text=Hola, quisiera reportar el negocio: ${negocio.name}`}
                             target="_blank"
-                            className={`cursor-pointer flex flex-row gap-1 justify-center items-center bg-red-200 rounded-lg px-3 py-1`}
+                            className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-red-200 rounded-lg px-3 py-1`}
                         >
                             {/* <Icon style={tw`text-xl text-[#7ACEFA]`} name="users" /> */}
                             <MessageSquareWarning
                                 size={16}
                                 color="red"
                             />
-                            <span className={`font-bold text-red-500 mt-0`}>Reportar</span>
+                            <span className={`font-semibold text-red-600 text-sm mt-0`}>Reportar</span>
                         </a>
                     </div>
 
