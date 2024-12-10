@@ -95,7 +95,7 @@ const NavBar = () => {
                         </div>
                         {carrito.length > 0 && <div>
                             <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0).toLocaleString()}</h2>
-                            <a href={`https://api.whatsapp.com/send/?phone=573118268264&text=*Detalles del pedido*%0A${carrito.reduce((acc, curr) => acc+`*${curr.nombreTienda}* - ${curr.nombre} x${curr.cantidad}%0A`,"")}%0A *Total a pagar: $${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0)}*  ≈ ${Math.ceil(carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0))} bs`} target="_blank"><Button className="mt-2 w-full  bg-blue-500 hover:bg-blue-600">Hacer pedido</Button></a>
+                            <a href={`https://api.whatsapp.com/send/?phone=573118268264&text=Detalles del pedido%0A%0A${carrito.reduce((acc, curr) => acc+`${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,"")}%0ATotal a pagar: $${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0).toLocaleString()}`} target="_blank"><Button className="mt-2 w-full  bg-blue-500 hover:bg-blue-600">Hacer pedido</Button></a>
                         </div>}
                     </SheetContent>
                 </Sheet>

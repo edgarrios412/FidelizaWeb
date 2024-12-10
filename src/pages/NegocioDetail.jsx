@@ -9,12 +9,15 @@ import { ArrowLeft, ArrowRight, Mails, MessageCircle, MessageSquareWarning, Phon
 import { useNavigate, useParams } from "react-router-dom"
 import { CarritoContext } from "@/utils/context/Carrito/CarritoContext"
 import { Button } from "@/components/ui/button"
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const NegocioDetail = () => {
 
     const { id } = useParams()
     const navigate = useNavigate()
     const [negocio, setNegocio] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
     const { carrito, setCarrito, agregarCarrito, quitarDelCarrito } = useContext(CarritoContext)
 
     useEffect(() => {
@@ -47,37 +50,67 @@ const NegocioDetail = () => {
                     <div
                         className={`flex flex-col z-30 justify-center items-center w-full rounded-lg overflow-hidden py-3 my-3`}
                     >
+                        <div className="relative w-28 h-28 rounded-full">
+                        {isLoading && <Skeleton circle className="absolute top-0 left-0 w-full h-full bg-gray-200 border-4 border-white"/>}
                         <img
                             src={negocio.image}
-                            className={`h-28 w-28 border-4 border-white rounded-full`}
+                            onLoad={() => {setIsLoading(false)}}
+                            className={`w-full h-full object-cover rounded-full border-4 border-white transition-opacity duration-500 ${
+                                isLoading ? "opacity-0" : "opacity-100"
+                              }`}
                         />
+                        </div>
                         {/* <div className={`bg-transparent`}> */}
-                        <span className={`font-semibold text-xl mt-2 text-black`}>
+                        <div className="relative h-7 mt-2 w-36 text-center">
+                        {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1"/>}
+                        <span className={`font-semibold text-xl mt-2 text-black transition-opacity duration-500 ${
+                                isLoading ? "opacity-0" : "opacity-100"
+                              }`}>
                             {negocio.name}
                         </span>
-                        <span className={`font-semibold text-sm mt-1 text-slate-600`}>
+                        </div>
+                        {/* <span className={`font-semibold text-xl mt-2 text-black`}>
+                            {negocio.name}
+                        </span> */}
+                        <div className="relative h-5 my-1 flex flex-col items-center w-64">
+                        {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1"/>}
+                        <span className={`font-semibold text-sm mt-1 text-slate-600 transition-opacity duration-500 ${
+                                isLoading ? "opacity-0" : "opacity-100"
+                              }`}>
                             {negocio.direction}
                         </span>
-                        <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center`}>
+                        </div>
+                        {/* <span className={`font-semibold text-sm mt-1 text-slate-600`}>
+                            {negocio.direction}
+                        </span> */}
+                        <div className="relative h-5 my-1 flex flex-col items-center w-36">
+                        {isLoading && <Skeleton className="absolute top-0 left-0 h-full my-1 w-full"/>}
+                        <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center transition-opacity duration-500 ${
+                                isLoading ? "opacity-0" : "opacity-100"
+                              }`}>
                             <Phone size={12} />
                             <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
                         </div>
+                        </div>
+                        {/* <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center`}>
+                            <Phone size={12} />
+                            <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
+                        </div> */}
                     </div>
                     <div className={`flex flex-row gap-4 justify-center mb-8 w-full`}>
-                        <a
+                        {/* <a
                             target="_blank"
                             href={`https://wa.me/${negocio.countryCode}${negocio.phone}`}
                             className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-green-200 rounded-lg px-3 py-1`}
                         >
-                            {/* <Icon style={tw`text-xl text-[#7ACEFA]`} name="users" /> */}
                             <Mails
                                 size={16}
                                 color="green"
                             />
                             <span className={`font-semibold text-green-600 text-sm mt-0`}>Contactar</span>
-                        </a>
+                        </a> */}
                         <a
-                            href={`https://wa.me/573118268264?text=Hola, quisiera reportar el negocio: ${negocio.name}`}
+                            href={`https://wa.me/573118268264?text=Hola, quisiera reportar un error en el negocio: ${negocio.name}`}
                             target="_blank"
                             className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-red-200 rounded-lg px-3 py-1`}
                         >
@@ -86,7 +119,7 @@ const NegocioDetail = () => {
                                 size={16}
                                 color="red"
                             />
-                            <span className={`font-semibold text-red-600 text-sm mt-0`}>Reportar</span>
+                            <span className={`font-semibold text-red-600 text-sm mt-0`}>Reportar error</span>
                         </a>
                     </div>
 
