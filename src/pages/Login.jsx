@@ -43,7 +43,13 @@ const Login = () => {
                 {/* <span></span> */}
             </div>
             <div className="bg-[#f2f5ff] w-full py-6 px-4">
-                <a href="/fidelizaV2.aab" download target="_blank" className="bg-white px-6 py-3 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
+                <a 
+                // href="/fidelizaV2.aab" download target="_blank" 
+                onClick={() => toast({
+                    variant: "destructive",
+                    title: "Link no disponible"
+                })}
+                className="bg-white px-6 py-3 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
                 <img className={"h-14"} src={favicon} />
                             <div>
                                 <span className="font-bold block mb-1">Descarga nuestra aplicación</span>

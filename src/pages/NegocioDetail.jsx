@@ -5,7 +5,7 @@ import favicon from "/favicon.png"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
-import { ArrowLeft, ArrowRight, Phone, ShoppingBasket, Ticket } from "lucide-react"
+import { ArrowLeft, ArrowRight, Mails, MessageCircle, MessageSquareWarning, Phone, ShoppingBasket, Ticket } from "lucide-react"
 import { useNavigate, useParams } from "react-router-dom"
 
 const NegocioDetail = () => {
@@ -60,6 +60,33 @@ const NegocioDetail = () => {
                             <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
                         </div>
                     </div>
+                    <div className={`flex flex-row gap-4 justify-center mb-8 w-full`}>
+                        <a
+                            target="_blank"
+                            href={`https://wa.me/${negocio.countryCode}${negocio.phone}`}
+                            className={`cursor-pointer flex flex-row gap-1 justify-center items-center bg-green-200 rounded-lg px-3 py-1`}
+                        >
+                            {/* <Icon style={tw`text-xl text-[#7ACEFA]`} name="users" /> */}
+                            <Mails
+                                size={16}
+                                color="#22c55e"
+                            />
+                            <span className={`font-bold text-green-500 mt-0`}>Contactar</span>
+                        </a>
+                        <a
+                            href={`https://wa.me/573118268264?text=Hola, quisiera reportar el negocio: ${negocio.name}`}
+                            target="_blank"
+                            className={`cursor-pointer flex flex-row gap-1 justify-center items-center bg-red-200 rounded-lg px-3 py-1`}
+                        >
+                            {/* <Icon style={tw`text-xl text-[#7ACEFA]`} name="users" /> */}
+                            <MessageSquareWarning
+                                size={16}
+                                color="red"
+                            />
+                            <span className={`font-bold text-red-500 mt-0`}>Reportar</span>
+                        </a>
+                    </div>
+
                     {/* {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable).length > 0 && <ProgressBar puntos={negocio?.userNegocioPoints?.puntos ?? 0} puntosMax={negocio?.products.sort((a, b) => a.price - b.price)[0].price} />} */}
                     <div className={`bg-white rounded-lg shadow-sm p-6 mb-6 w-full`}>
                         <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
@@ -91,7 +118,13 @@ const NegocioDetail = () => {
                         </div>
                     </div>
                     <div className="bg-[#f2f5ff] w-full pb-4 px-0">
-                        <a href="/fidelizaV2.aab" download target="_blank" className="bg-blue-500 px-6 py-4 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
+                        <a
+                            // href="/fidelizaV2.aab" download target="_blank"
+                            onClick={() => toast({
+                                variant: "destructive",
+                                title: "Link no disponible"
+                            })}
+                            className="bg-blue-500 px-6 py-4 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
                             <img className={"h-14"} src={favicon} />
                             <div>
                                 <span className="font-bold block mb-1 text-white">Descarga nuestra aplicación</span>
