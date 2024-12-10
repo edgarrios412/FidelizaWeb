@@ -85,7 +85,7 @@ const NegocioDetail = () => {
                         </span> */}
                         <div className="relative h-5 my-1 flex flex-col items-center w-36">
                         {isLoading && <Skeleton className="absolute top-0 left-0 h-full my-1 w-full"/>}
-                        <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center transition-opacity duration-500 ${
+                        <div className={`text-slate-600 flex flex-row mt-0 gap-1 items-center transition-opacity duration-500 ${
                                 isLoading ? "opacity-0" : "opacity-100"
                               }`}>
                             <Phone size={12} />

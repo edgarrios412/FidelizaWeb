@@ -34,20 +34,20 @@ const NavBar = () => {
     const buscarProducto = (e) => {
         const busqueda = e.target.value
         setBusqueda(e.target.value)
-        if(busqueda.length >= 1){
+        if (busqueda.length >= 1) {
             // alert(busqueda)
-            return navigate("/buscar/"+busqueda)
-        }else{
+            return navigate("/buscar/" + busqueda)
+        } else {
             return navigate("/")
         }
     }
 
     useEffect(() => {
-        if(location.pathname.includes("/buscar/")){
+        if (location.pathname.includes("/buscar/")) {
             const palabra = location.pathname.split("/buscar/")[1]
-            setBusqueda(palabra.includes("%20") ? palabra.replace("%20"," ") : palabra)
+            setBusqueda(palabra.includes("%20") ? palabra.replace("%20", " ") : palabra)
         }
-    },[])
+    }, [])
 
     return (
         <>
@@ -55,7 +55,7 @@ const NavBar = () => {
                 <div className="relative flex">
                     <a onClick={() => navigate("/")} className="relative cursor-pointer">
                         <div className="h-full w-32 sm:w-40 flex items-center">
-                          <img className={"w-36"} src={imageBg} />
+                            <img className={"w-36"} src={imageBg} />
                         </div>
                     </a>
                     {/* <div className="sm:relative sm:left-52">
@@ -68,35 +68,68 @@ const NavBar = () => {
                 <Sheet>
                     <SheetTrigger className="ml-2 relative inline-flex items-center">
                         <ShoppingBasket className="w-8 h-8 sm:w-10 sm:h-10 -y-10" />
-                        <Badge className="absolute inline-flex items-center justify-center h-5 w-5 sm:w-6 sm:h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-5 -end-1 sm:top-6 sm:-end-2 dark:border-gray-900" variant="destructive">{carrito.length}</Badge>
+                        <Badge
+                            className="absolute inline-flex items-center justify-center h-5 w-5 sm:w-6 sm:h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-5 -end-1 sm:top-6 sm:-end-2 dark:border-gray-900"
+                            variant="destructive"
+                        >
+                            {carrito.length}
+                        </Badge>
                     </SheetTrigger>
-                    <SheetContent className="w-full sm:w-full">
+                    <SheetContent className="w-full sm:w-full flex flex-col h-screen">
                         <SheetHeader>
                             <SheetTitle>Carrito de compras</SheetTitle>
                             <SheetDescription>
                                 Actualmente para hacer el pedido necesitas tener Whatsapp para enviar el pedido y ser procesado por FidelizApp
                             </SheetDescription>
                         </SheetHeader>
-                        <div className="flex flex-col gap-5 mt-6 max-h-80 min-h-80 overflow-auto mb-10">
-                            {!carrito.length && <h3 className="text-gray-500 flex items-center text-sm justify-center mt-20"><ShoppingCart className="w-4 h-4 mr-2"/> El carrito está vacío</h3>}
-                            {carrito.map((c,i) => 
-                            <div key={i} className="flex gap-2 justify-between items-center">
-                                <div className="flex gap-2 items-center">
-                                <div className="rounded-lg w-16 h-16 overflow-hidden">
-                                    <img src={c.imagen} alt="Imagen" className="object-cover h-full m-auto" />
+
+                        {/* Contenido principal del carrito */}
+                        <div className="flex-grow mt-6 max-h-[calc(100%-6rem)] overflow-auto">
+                            {!carrito.length && (
+                                <h3 className="text-gray-500 flex items-center text-sm justify-center mt-20">
+                                    <ShoppingCart className="w-4 h-4 mr-2" />
+                                    El carrito está vacío
+                                </h3>
+                            )}
+                            {carrito.map((c, i) => (
+                                <div key={i} className="flex gap-2 justify-between items-center mb-4">
+                                    <div className="flex gap-2 items-center">
+                                        <div className="rounded-lg w-16 h-16 overflow-hidden">
+                                            <img src={c.imagen} alt="Imagen" className="object-cover h-full m-auto" />
+                                        </div>
+                                        <div>
+                                            <p className="font-bold text-sm">{c.nombre}</p>
+                                            <h2 className="font-bold text-sm my-1">
+                                                ${c.precio.toLocaleString()}{" "}
+                                                <span className="text-sm text-gray-600 font-normal"> x {c.cantidad}</span>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        className="bg-blue-500 hover:bg-blue-600"
+                                        onClick={() => quitarDelCarrito({ productoId: c.productoId, tiendaId: c.tiendaId })}
+                                    >
+                                        Quitar
+                                    </Button>
                                 </div>
-                                <div>
-                                    <p className="font-bold text-sm">{c.nombre}</p>
-                                    <h2 className="font-bold text-sm my-1">${c.precio.toLocaleString()} <span className="text-sm text-gray-600 font-normal"> x {c.cantidad}</span></h2>
-                                </div>
-                                </div>
-                                <Button className="bg-blue-500 hover:bg-blue-600" onClick={() => quitarDelCarrito({productoId:c.productoId, tiendaId:c.tiendaId})}>Quitar</Button>
-                            </div>)}
+                            ))}
                         </div>
-                        {carrito.length > 0 && <div>
-                            <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0).toLocaleString()}</h2>
-                            <a href={`https://api.whatsapp.com/send/?phone=573118268264&text=Detalles del pedido%0A%0A${carrito.reduce((acc, curr) => acc+`${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,"")}%0ATotal a pagar: $${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0).toLocaleString()}`} target="_blank"><Button className="mt-2 w-full  bg-blue-500 hover:bg-blue-600">Hacer pedido</Button></a>
-                        </div>}
+
+                        {/* Footer fijo con total y botón */}
+                        {carrito.length > 0 && (
+                            <div className="sticky bottom-0 bg-white pt-4 pb-6 border-t border-gray-200">
+                                <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
+                                <a
+                                    href={`https://api.whatsapp.com/send/?phone=573118268264&text=Detalles del pedido%0A%0A${carrito.reduce(
+                                        (acc, curr) => acc + `${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,
+                                        ""
+                                    )}%0ATotal a pagar: $${carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}`}
+                                    target="_blank"
+                                >
+                                    <Button className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>
+                                </a>
+                            </div>
+                        )}
                     </SheetContent>
                 </Sheet>
             </div>
