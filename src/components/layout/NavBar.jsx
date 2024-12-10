@@ -1,284 +1,107 @@
-import React, { useContext, useEffect, useState } from "react";
-import { cn } from "@/lib/utils"
-import { Link, useNavigate } from "react-router-dom";
-import style from "./NavBar.module.css"
-// import { Icons } from "@/components/icons"
+import { useContext, useEffect, useRef, useState } from "react"
+import { Button } from "../ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
+import { Label } from "../ui/label"
+import { Input } from "../ui/input"
+// import Rifavo from "../icons/branding/Rifavo"
+import { Badge } from "../ui/badge"
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { ArrowDownToLine, CalendarDays, History, LogOut, QrCode, ShoppingBasket, ShoppingCart, Ticket, Trophy, User } from "lucide-react"
+// import { ModeToggle } from "../mode-toggle"
+// import RifavoLight from "../icons/branding/RifavoLight"
+// import { precioDolar } from "@/utils/helpers/precioDolar"
+import { useLocation, useNavigate } from "react-router-dom"
+import { CarritoContext } from "@/utils/context/Carrito/CarritoContext"
+import imageBg from "../../assets/name.png"
 
-import { Button } from "@/components/ui/button"
-import ModalLogin from "./ModalLogin";
+const NavBar = () => {
+    const [busqueda, setBusqueda] = useState("")
+    const { carrito, setCarrito, quitarDelCarrito } = useContext(CarritoContext)
+    const navigate = useNavigate()
+    const location = useLocation()
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import {
-  Cloud,
-  CreditCard,
-  Github,
-  Keyboard,
-  LifeBuoy,
-  LogOut,
-  Mail,
-  MessageSquare,
-  Plus,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-  Users,
-} from "lucide-react"
-import { UserContext } from "@/utils/context/User/UserContext";
-
-
-const components = [
-  {
-    title: "Firma digital",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Tarjeta digital",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Certificado medico",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Biometricos",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-]
-
-export default () => {
-
-  const {usuario} = useContext(UserContext)
-  const [open, setOpen] = useState(false)
-  const [isLogged, setIsLogged] = useState(false)
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    console.log(isLogged)
-  }, [isLogged])
-
-  useEffect(() => {
-    if(localStorage.getItem("token")){
-      setIsLogged(true)
+    const vaciarCarrito = () => {
+        setCarrito([])
     }
-  },[])
 
-  return (
-    <div className={style.navbar}>
-      <NavigationMenu className="w-screen font-[OpenSans] max-w-full py-6 flex justify-around">
-        <h4 className="font-bold text-white text-2xl ">Teldip</h4>
-        <NavigationMenuList className="flex justify-around">
-          <NavigationMenuItem>
-            <Link to="/">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Inicio
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Servicios</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.1fr_1fr]">
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                      href="/"
-                    >
-                      <div className="mb-2 mt-4 text-lg font-medium">
-                        shadcn/ui
-                      </div>
-                      <p className="text-sm leading-tight text-muted-foreground">
-                        Beautifully designed components that you can copy and
-                        paste into your apps. Accessible. Customizable. Open
-                        Source.
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <ListItem className={"font-[OpenSans] text-xl"} onClick={() => isLogged ? navigate("/perfil") : setOpen(true)} title="Firma digital">
-                  API para firmar documentos de forma digital en pocos pasos
-                </ListItem>
-                <ListItem className={"font-[OpenSans] text-xl"} onClick={() => isLogged ? navigate("/perfil") : setOpen(true)} title="Tarjeta digital">
-                  Servicio de identificación de vigilados a través de nuestra app
-                </ListItem>
-                <ListItem className={"font-[OpenSans] text-xl"} onClick={() => isLogged ? navigate("/perfil") : setOpen(true)} title="Certificado medico">
-                  Genera certificados medicos válidos para tu empresa
-                </ListItem>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          {/* <NavigationMenuItem>
-          <NavigationMenuTrigger>Inicio</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem> */}
-          <NavigationMenuItem>
-            <Link to="/contacto">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Contacto
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link to="/politicas">
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Políticas
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-        {!isLogged ?
-          <ModalLogin open={open} setIsLogged={setIsLogged} setOpen={setOpen} /> :
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Avatar role="button">
-                <AvatarImage className="bg-white" src={usuario.image ? `https://back-teldip.onrender.com/uploads/${usuario.image}` : "https://icons.veryicon.com/png/o/internet--web/prejudice/user-128.png"} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 font-[OpenSans]">
-              <DropdownMenuLabel>Mi cuenta</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <Link to="/perfil">
-                <DropdownMenuItem className="cursor-pointer">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>Perfil</span>
-                  <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                </Link>
-                {/* <DropdownMenuItem className="cursor-pointer">
-                  <CreditCard className="mr-2 h-4 w-4" />
-                  <span>Pagos</span>
-                  <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Ajustes</span>
-                  <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                </DropdownMenuItem> */}
-              </DropdownMenuGroup>
-              {/* <DropdownMenuSeparator /> 
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
-                  <Users className="mr-2 h-4 w-4" />
-                  <span>Equipo</span>
-                </DropdownMenuItem>
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>
-                    <UserPlus className="mr-2 h-4 w-4" />
-                    <span>Invitar usuarios</span>
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem>
-                        <Mail className="mr-2 h-4 w-4" />
-                        <span>Correo</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        <span>Mensaje</span>
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
-                        <PlusCircle className="mr-2 h-4 w-4" />
-                        <span>Más...</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-                <DropdownMenuItem>
-                  <Plus className="mr-2 h-4 w-4" />
-                  <span>Nuevo equipo</span>
-                  <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                </DropdownMenuItem>
-              </DropdownMenuGroup> 
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LifeBuoy className="mr-2 h-4 w-4" />
-                <span>Soporte</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem disabled>
-                <Cloud className="mr-2 h-4 w-4" />
-                <span>API</span>
-        </DropdownMenuItem> */}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer hover:!bg-red-200" onClick={() => { setIsLogged(false); localStorage.removeItem("token"); setOpen(false) }}>
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Cerrar sesion</span>
-                {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
+    const buscarProducto = (e) => {
+        const busqueda = e.target.value
+        setBusqueda(e.target.value)
+        if(busqueda.length >= 1){
+            // alert(busqueda)
+            return navigate("/buscar/"+busqueda)
+        }else{
+            return navigate("/")
         }
-      </NavigationMenu>
-    </div>
-  );
+    }
+
+    useEffect(() => {
+        if(location.pathname.includes("/buscar/")){
+            const palabra = location.pathname.split("/buscar/")[1]
+            setBusqueda(palabra.includes("%20") ? palabra.replace("%20"," ") : palabra)
+        }
+    },[])
+
+    return (
+        <>
+            <div className="fixed w-full h-16 flex items-center px-8 lg:px-20 justify-between bg-white dark:bg-[#262635] bg-opacity-95 z-50">
+                <div className="relative flex">
+                    <a onClick={() => navigate("/")} className="relative cursor-pointer">
+                        <div className="h-full w-32 sm:w-40 flex items-center">
+                          <img className={"w-36"} src={imageBg} />
+                        </div>
+                    </a>
+                    {/* <div className="sm:relative sm:left-52">
+                        <ModeToggle />
+                    </div>
+                    <div className="sm:relative sm:left-52 ml-2">
+                        <Input onChange={buscarProducto} value={busqueda} name="email" placeholder="Buscar productos" />
+                    </div> */}
+                </div>
+                <Sheet>
+                    <SheetTrigger className="ml-2 relative inline-flex items-center">
+                        <ShoppingBasket className="w-8 h-8 sm:w-10 sm:h-10 -y-10" />
+                        <Badge className="absolute inline-flex items-center justify-center h-5 w-5 sm:w-6 sm:h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-5 -end-1 sm:top-6 sm:-end-2 dark:border-gray-900" variant="destructive">{carrito.length}</Badge>
+                    </SheetTrigger>
+                    <SheetContent className="w-full sm:w-full">
+                        <SheetHeader>
+                            <SheetTitle>Carrito de compras</SheetTitle>
+                            <SheetDescription>
+                                Actualmente para hacer el pedido necesitas tener Whatsapp para enviar el pedido y ser procesado por FidelizApp
+                            </SheetDescription>
+                        </SheetHeader>
+                        <div className="flex flex-col gap-5 mt-6 max-h-80 min-h-80 overflow-auto mb-10">
+                            {!carrito.length && <h3 className="text-gray-500 flex items-center text-sm justify-center mt-20"><ShoppingCart className="w-4 h-4 mr-2"/> El carrito está vacío</h3>}
+                            {carrito.map((c,i) => 
+                            <div key={i} className="flex gap-2 justify-between items-center">
+                                <div className="flex gap-2 items-center">
+                                <div className="rounded-lg w-16 h-16 overflow-hidden">
+                                    <img src={c.imagen} alt="Imagen" className="object-cover h-full m-auto" />
+                                </div>
+                                <div>
+                                    <p className="font-bold text-sm">{c.nombre}</p>
+                                    <h2 className="font-bold text-sm my-1">${c.precio.toLocaleString()} <span className="text-sm text-gray-600 font-normal"> x {c.cantidad}</span></h2>
+                                </div>
+                                </div>
+                                <Button className="bg-blue-500 hover:bg-blue-600" onClick={() => quitarDelCarrito({productoId:c.productoId, tiendaId:c.tiendaId})}>Quitar</Button>
+                            </div>)}
+                        </div>
+                        {carrito.length > 0 && <div>
+                            <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0).toLocaleString()}</h2>
+                            <a href={`https://api.whatsapp.com/send/?phone=573118268264&text=*Detalles del pedido*%0A${carrito.reduce((acc, curr) => acc+`*${curr.nombreTienda}* - ${curr.nombre} x${curr.cantidad}%0A`,"")}%0A *Total a pagar: $${carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0)}*  ≈ ${Math.ceil(carrito.reduce((acc, curr) => acc + (curr.precio * curr.cantidad), 0))} bs`} target="_blank"><Button className="mt-2 w-full  bg-blue-500 hover:bg-blue-600">Hacer pedido</Button></a>
+                        </div>}
+                    </SheetContent>
+                </Sheet>
+            </div>
+        </>
+    )
 }
 
-const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
+export default NavBar

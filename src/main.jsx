@@ -6,6 +6,8 @@ import { NavigationProvider } from "./utils/context/Navigation/NavigationProvide
 import axios from "axios";
 import { UserProvider } from "./utils/context/User/UserProvider.jsx";
 import { Toaster } from "./components/ui/toaster.jsx";
+import { CarritoProvider } from "./utils/context/Carrito/CarritoProvider.jsx";
+import NavBar from "./components/layout/NavBar.jsx";
 
 axios.defaults.baseURL = "https://fideliza-back.onrender.com";
 // axios.defaults.baseURL = 'http://localhost:3001';
@@ -13,10 +15,13 @@ axios.defaults.baseURL = "https://fideliza-back.onrender.com";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <UserProvider>
-      <Toaster/>
-      <NavigationProvider>
-        <App />
-      </NavigationProvider>
+      <CarritoProvider>
+        <Toaster />
+        <NavigationProvider>
+          <NavBar/>
+          <App />
+        </NavigationProvider>
+      </CarritoProvider>
     </UserProvider>
   </BrowserRouter>
 );

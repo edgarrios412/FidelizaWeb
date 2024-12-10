@@ -7,18 +7,15 @@ import Bandeja from "./pages/Profile/Bandeja";
 import DetailProcedimiento from "./pages/Profile/DetailProcedimiento";
 import Profile from "./pages/Profile";
 import NegocioDetail from "./pages/NegocioDetail";
+import { CarritoContext } from "./utils/context/Carrito/CarritoContext";
 
 function App() {
 
-  const {setUsuario} = useContext(UserContext)
+  const {cargarCarrito} = useContext(CarritoContext)
 
-  // useEffect(() => {
-  //   if(localStorage.getItem("token")){
-  //     axios.get("/user/token/"+localStorage.getItem("token")).then(({data}) => {
-  //       setUsuario(data)
-  //     })
-  //   }
-  // },[])
+  useEffect(() => {
+    cargarCarrito()
+  }, [])
 
   return (
     <>

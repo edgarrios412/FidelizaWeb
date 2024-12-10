@@ -37,11 +37,6 @@ const Login = () => {
 
     return (
         <div className="bg-[#f2f5ff] w-[100vw] h-[100vh]">
-            <div className="bg-white w-full h-16 flex items-center justify-center px-10">
-                {/* <img className={"w-10"} src={favicon} /> */}
-                <img className={"w-36"} src={ImageBg} />
-                {/* <span></span> */}
-            </div>
             <div className="bg-[#f2f5ff] w-full py-6 px-4">
                 <a 
                 // href="/fidelizaV2.aab" download target="_blank" 
@@ -49,7 +44,7 @@ const Login = () => {
                     variant: "destructive",
                     title: "Link no disponible"
                 })}
-                className="bg-white px-6 py-3 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
+                className="mt-16 bg-white px-6 py-3 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
                 <img className={"h-14"} src={favicon} />
                             <div>
                                 <span className="font-bold block mb-1">Descarga nuestra aplicación</span>
