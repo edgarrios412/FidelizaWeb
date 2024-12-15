@@ -68,11 +68,11 @@ const ProductDetail = ({product, volver, id, nombreTienda}) => {
                         <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
                             Descripción
                         </span>
-                        <span className={`text-gray-500 mb-1 block`} style={{ whiteSpace: "pre-wrap"}}>
+                        <span className={`text-gray-500 mb-3 block`} style={{ whiteSpace: "pre-wrap"}}>
                             {product.desc}
                         </span>
                         <span className={`font-bold block`}>$ {product.value.toLocaleString()}</span>
-                        <div className={`flex flex-row items-center gap-1 mt-6`}>
+                        <div className={`flex flex-row items-center gap-1 mt-4`}>
                                         <img
                                             src={moneda}
                                             className={`w-4 h-4`}
