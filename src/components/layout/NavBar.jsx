@@ -73,7 +73,7 @@ const NavBar = () => {
                             className="absolute inline-flex items-center justify-center h-5 w-5 sm:w-6 sm:h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-5 -end-1 sm:top-6 sm:-end-2 dark:border-gray-900"
                             variant="destructive"
                         >
-                            {/* {carrito?.length} */}
+                            {carrito?.length}
                         </Badge>
                     </SheetTrigger>
                     <SheetContent className="w-full sm:w-full flex flex-col h-screen">
