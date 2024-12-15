@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-const ProductDetail = ({product, volver, id}) => {
+const ProductDetail = ({product, volver, id, nombreTienda}) => {
 
     const navigate = useNavigate()
     const [negocio, setNegocio] = useState([])
@@ -21,9 +21,13 @@ const ProductDetail = ({product, volver, id}) => {
 
     const { toast } = useToast()
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
+
     return (
         <>
-            {negocio && <div className={`bg-[#f2f5ff] h-[100vh]`}>
+            {negocio && <div className={`bg-[#f2f5ff] h-full`}>
                 {/* TAREA: TESTEAR SI FUNCIONA */}
                 <div className={`bg-blue-500 w-full h-56 absolute`}>
                     {/* {negocio?.background.at(0) != "#" && <img className={`w-full h-full`} src={negocio.background} />} */}
@@ -79,7 +83,7 @@ const ProductDetail = ({product, volver, id}) => {
                     <div className="flex gap-16 items-center justify-center w-full">
                                             <Button className="h-16 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => quitarDelCarrito({ productoId: product.id, tiendaId: id })}>-</Button>
                                             <p className="font-bold text-xl">{carrito.find(c => c.tiendaId == id && c.productoId == product.id)?.cantidad ?? 0}</p>
-                                            <Button className="h-16 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => agregarCarrito({ productoId: product.id, tiendaId: id, cantidad: 1, imagen: product.image, precio: product.value, nombre: product.name, nombreTienda: negocio.name })}>+</Button>
+                                            <Button className="h-16 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => agregarCarrito({ productoId: product.id, tiendaId: id, cantidad: 1, imagen: product.image, precio: product.value, nombre: product.name, nombreTienda: nombreTienda })}>+</Button>
                                         </div>
                     <div className={`rounded-lg mb-6 w-full`}>
                         {/* <span className={`text-gray-500 mb-1`}>A continuación verás una lista de articulos o descuentos que puedes obtener con tus puntos acumulados</span> */}
@@ -102,41 +106,6 @@ const ProductDetail = ({product, volver, id}) => {
                                         </div>
                                     </div>
                                 </div>)}
-                        </div>
-                    </div>
-                    {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable).length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
-                        Redime tus puntos
-                    </span>}
-                    <div className={`rounded-lg mb-6 w-full`}>
-                        {/* <span className={`text-gray-500 mb-1`}>A continuación verás una lista de articulos o descuentos que puedes obtener con tus puntos acumulados</span> */}
-                        <div className={`flex flex-col gap-3 my-4`}>
-                            {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable).map(p => <div
-                                key={p.id}
-                                disabled={negocio?.userNegocioPoints?.puntos >= p.price ? false : true}
-                                // onPress={() => navigation.navigate("Canjear")}
-                                className={`bg-white flex flex-row items-center rounded-lg shadow-sm p-4 w-full gap-4`}
-                            >
-                                <div className={`w-20 h-20 flex items-center`}>
-                                    <img
-                                        src={p.image}
-                                        className={`w-full`}
-                                    />
-                                </div>
-                                <div className="flex flex-col items-start">
-                                    <span className={`text-[#222B45] font-bold mb-0 block`}>
-                                        {p.name}
-                                    </span>
-                                    <div className={`flex flex-row items-center gap-1`}>
-                                        <img
-                                            src={moneda}
-                                            className={`w-4 h-4`}
-                                        />
-                                        <span className={`text-sm text-blue-500 font-bold block`}>{p.price}</span>
-                                    </div>
-                                    <span className={`text-slate-600 mt-0 block`}>Valor</span>
-                                    <span className={`font-bold block`}>$ {p.value.toLocaleString()}</span>
-                                </div>
-                            </div>)}
                         </div>
                     </div>
                 </div>

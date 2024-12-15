@@ -28,7 +28,7 @@ const NegocioDetail = () => {
 
     const { toast } = useToast()
 
-    if(productSelected) return <ProductDetail product={productSelected} id={id} volver={() => setProductSelected(null)}/>
+    if(productSelected) return <ProductDetail product={productSelected} id={id} nombreTienda={negocio.name} volver={() => setProductSelected(null)}/>
 
     return (
         <>
@@ -88,13 +88,13 @@ const NegocioDetail = () => {
                             {negocio.direction}
                         </span> */}
                         <div className="relative h-5 my-1 flex flex-col items-center w-36">
-                        {isLoading && <Skeleton className="absolute top-0 left-0 h-full my-1 w-full"/>}
+                        {/* {isLoading && <Skeleton className="absolute top-0 left-0 h-full my-1 w-full"/>}
                         <div className={`text-slate-600 flex flex-row mt-0 gap-1 items-center transition-opacity duration-500 ${
                                 isLoading ? "opacity-0" : "opacity-100"
                               }`}>
                             <Phone size={12} />
                             <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
-                        </div>
+                        </div> */}
                         </div>
                         {/* <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center`}>
                             <Phone size={12} />
