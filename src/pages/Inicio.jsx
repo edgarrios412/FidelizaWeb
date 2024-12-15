@@ -51,7 +51,7 @@ const Inicio = () => {
     const cambiarTexto = () => {
         setTimeout(() => {
             setIndex((prev) => {
-                if (prev >= textos.length - 1) {
+                if (prev >= textos?.length - 1) {
                     return 0
                 } else {
                     return prev + 1

@@ -172,7 +172,7 @@ const NegocioDetail = () => {
                             </div>
                         </a>
                     </div>
-                    {negocio?.products?.filter(p => !p.onlyClaimable).length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
+                    {negocio?.products?.filter(p => !p.onlyClaimable)?.length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
                         Catálogo
                     </span>}
                     <div className={`rounded-lg mb-6 w-full`}>
@@ -198,7 +198,7 @@ const NegocioDetail = () => {
                                 </div>)}
                         </div>
                     </div>
-                    {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable).length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
+                    {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable)?.length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
                         Redime tus puntos
                     </span>}
                     <div className={`rounded-lg mb-6 w-full`}>

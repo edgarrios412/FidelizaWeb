@@ -126,7 +126,7 @@ const Bandeja = ({ className, ...props }) => {
             <CardHeader>
               <CardTitle>Bandeja</CardTitle>
               <CardDescription>
-                Tienes {appointments.length} citas pendientes
+                Tienes {appointments?.length} citas pendientes
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4 max-h-fit">

@@ -35,7 +35,7 @@ const NavBar = () => {
     const buscarProducto = (e) => {
         const busqueda = e.target.value
         setBusqueda(e.target.value)
-        if (busqueda.length >= 1) {
+        if (busqueda?.length >= 1) {
             // alert(busqueda)
             return navigate("/buscar/" + busqueda)
         } else {
@@ -43,12 +43,12 @@ const NavBar = () => {
         }
     }
 
-    useEffect(() => {
-        if (location.pathname.includes("/buscar/")) {
-            const palabra = location.pathname.split("/buscar/")[1]
-            setBusqueda(palabra.includes("%20") ? palabra.replace("%20", " ") : palabra)
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (location.pathname.includes("/buscar/")) {
+    //         const palabra = location.pathname.split("/buscar/")[1]
+    //         setBusqueda(palabra.includes("%20") ? palabra.replace("%20", " ") : palabra)
+    //     }
+    // }, [])
 
     return (
         <>
@@ -73,7 +73,7 @@ const NavBar = () => {
                             className="absolute inline-flex items-center justify-center h-5 w-5 sm:w-6 sm:h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-5 -end-1 sm:top-6 sm:-end-2 dark:border-gray-900"
                             variant="destructive"
                         >
-                            {carrito.length}
+                            {/* {carrito?.length} */}
                         </Badge>
                     </SheetTrigger>
                     <SheetContent className="w-full sm:w-full flex flex-col h-screen">
@@ -86,13 +86,13 @@ const NavBar = () => {
 
                         {/* Contenido principal del carrito */}
                         <div className="flex-grow mt-6 max-h-[calc(100%-6rem)] overflow-auto">
-                            {!carrito.length && (
+                            {/* {!carrito?.length && (
                                 <h3 className="text-gray-500 flex items-center text-sm justify-center mt-20">
                                     <ShoppingCart className="w-4 h-4 mr-2" />
                                     El carrito está vacío
                                 </h3>
-                            )}
-                            {carrito.map((c, i) => (
+                            )} */}
+                            {carrito?.map((c, i) => (
                                 <div key={i} className="flex gap-2 justify-between items-center mb-4">
                                     <div className="flex gap-2 items-center">
                                         <div className="rounded-lg w-16 h-16 overflow-hidden">
@@ -118,15 +118,15 @@ const NavBar = () => {
 
                         {/* Footer fijo con total y botón */}
                         <div className="sticky bottom-0 bg-white pt-4 pb-6 border-t border-gray-200">
-                                <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
+                                <h2 className="font-bold text-lg">Total: ${carrito?.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
                                 <div className={`flex flex-row items-center gap-1 my-2`}>
                                         <img
                                             src={moneda}
                                             className={`w-4 h-4`}
                                         />
-                                        <span className={`text-sm text-blue-500 font-bold block`}>Por tu compra recibes {carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0)/1000} puntos</span>
+                                        <span className={`text-sm text-blue-500 font-bold block`}>Por tu compra recibes {carrito?.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0)/1000} puntos</span>
                                     </div>
-                                {carrito.length > 0 ? <a
+                                {/* {carrito?.length > 0 ? <a
                                     href={`https://api.whatsapp.com/send/?phone=573022536253&text=Detalles del pedido%0A%0A${carrito.reduce(
                                         (acc, curr) => acc + `${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,
                                         ""
@@ -134,7 +134,7 @@ const NavBar = () => {
                                     target="_blank"
                                 >
                                     <Button className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>
-                                </a>: <Button disabled className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>}
+                                </a>: <Button disabled className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>} */}
                             </div>
                     </SheetContent>
                 </Sheet>

@@ -26,7 +26,7 @@ const Login = () => {
     }, [])
 
     const buscarUsuario = () => {
-        if (phone.length < 10) {
+        if (phone?.length < 10) {
             setNegocios(negociosAll)
             return toast({
                 variant: "destructive",
@@ -89,10 +89,10 @@ const Login = () => {
                 </div>
             </div>
             <div className="bg-[#f2f5ff] w-full px-4">
-                {negocios.length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-2 block`}>
+                {/* {negocios?.length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-2 block`}>
                     Negocios Aliados
-                </span>}
-                {negocios.length > 0 && negocios?.map(n => <div
+                </span>} */}
+                {/* {negocios?.length > 0 && negocios?.map(n => <div
                     key={n.id}
                     onClick={() => navigate("/negocio/" + n.id)}
                     className="mb-2 cursor-pointer pr-4 flex flex-row items-center justify-between gap-4 bg-white px-4 py-3 rounded-lg shadow-sm"
@@ -122,8 +122,7 @@ const Login = () => {
                         </div>
                     </div>
                     <ArrowRight size={18} color="gray" />
-                    {/* <Icon name={"chevron-right"} size={24} /> */}
-                </div>)}
+                </div>)} */}
             </div>
             {/* <ModalLogin className="absolute" open={true} /> */}
         </div>

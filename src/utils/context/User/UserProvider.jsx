@@ -11,6 +11,7 @@ export const UserProvider = ({children}) => {
         axios.get("/user/token/"+token)
         .then(({data}) => setUsuario(data))
     }
+    
     return (
         <UserContext.Provider value={{usuario, setUsuario, updateUsuario}}>
             {children}
