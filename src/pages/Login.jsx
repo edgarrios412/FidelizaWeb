@@ -61,7 +61,7 @@ const Login = () => {
                 </a>
             </div>
             <a
-                href="https://wa.me/573118268264"
+                href="https://wa.me/573022536253"
                 target="_blank"
                 className={`cursor-pointer flex flex-row items-center justify-between px-10 mb-8`}
             >
@@ -82,7 +82,7 @@ const Login = () => {
                         <label className="font-semibold">Ingresa tu número de télefono</label>
                         <div className="flex flex-row gap-3 items-center">
                             <span className="text-slate-500">+57</span>
-                            <input type="number" placeholder="3118268264" value={phone} onChange={(e) => setPhone(e.target.value)} className="border-[1px] rounded-md border-gray-200 h-8 px-3 focus:outline-blue-200 w-full" />
+                            <input type="number" placeholder="3022536253" value={phone} onChange={(e) => setPhone(e.target.value)} className="border-[1px] rounded-md border-gray-200 h-8 px-3 focus:outline-blue-200 w-full" />
                         </div>
                         <button onClick={buscarUsuario} className="bg-blue-200 py-2 rounded-md mt-4 text-blue-600 font-bold text-base flex flex-col items-center h-10">{loading ? <Spinner /> : "Consultar puntos"}</button>
                     </div>

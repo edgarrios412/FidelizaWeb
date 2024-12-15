@@ -11,12 +11,14 @@ import { CarritoContext } from "@/utils/context/Carrito/CarritoContext"
 import { Button } from "@/components/ui/button"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import ProductDetail from "./ProductDetail"
 
 const NegocioDetail = () => {
 
     const { id } = useParams()
     const navigate = useNavigate()
     const [negocio, setNegocio] = useState([])
+    const [productSelected, setProductSelected] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const { carrito, setCarrito, agregarCarrito, quitarDelCarrito } = useContext(CarritoContext)
 
@@ -25,6 +27,8 @@ const NegocioDetail = () => {
     }, [])
 
     const { toast } = useToast()
+
+    if(productSelected) return <ProductDetail product={productSelected} id={id} volver={() => setProductSelected(null)}/>
 
     return (
         <>
@@ -110,7 +114,7 @@ const NegocioDetail = () => {
                             <span className={`font-semibold text-green-600 text-sm mt-0`}>Contactar</span>
                         </a> */}
                         <a
-                            href={`https://wa.me/573118268264?text=Hola, quisiera reportar un error en el negocio: ${negocio.name}`}
+                            href={`https://wa.me/573022536253?text=Hola, quisiera reportar un error en el negocio: ${negocio.name}`}
                             target="_blank"
                             className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-red-200 rounded-lg px-3 py-1`}
                         >
@@ -175,7 +179,7 @@ const NegocioDetail = () => {
                         {/* <span className={`text-gray-500 mb-1`}>A continuación verás una lista de articulos o descuentos que puedes obtener con tus puntos acumulados</span> */}
                         <div className={`flex flex-row gap-3 my-4`}>
                             {negocio?.products?.filter(p => !p.onlyClaimable).map(p => <div className="flex-col items-center max-w-40 lg:w-96 rounded-lg shadow-md bg-white dark:bg-[#262635] shadow-slate-200 dark:shadow-gray-900 pb-4">
-                                    <div className="rounded-lg w-28 h-28 overflow-hidden m-auto">
+                                    <div onClick={() => setProductSelected(p)} className="cursor-pointer rounded-lg w-28 h-28 overflow-hidden m-auto">
                                         <img src={p.image} alt="Imagen" className="object-cover h-full m-auto" />
                                     </div>
                                     <div className="text-left px-6">
@@ -206,11 +210,10 @@ const NegocioDetail = () => {
                                 // onPress={() => navigation.navigate("Canjear")}
                                 className={`bg-white flex flex-row items-center rounded-lg shadow-sm p-4 w-full gap-4`}
                             >
-                                <div className={`w-20 h-20`}>
+                                <div className={`w-20 h-20 flex items-center`}>
                                     <img
                                         src={p.image}
-                                        resizeMode="contain"
-                                        className={`w-full h-full`}
+                                        className={`w-full`}
                                     />
                                 </div>
                                 <div className="flex flex-col items-start">
