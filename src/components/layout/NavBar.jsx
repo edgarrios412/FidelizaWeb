@@ -118,7 +118,7 @@ const NavBar = () => {
 
                         {/* Footer fijo con total y botón */}
                         <div className="sticky bottom-0 bg-white pt-4 pb-6 border-t border-gray-200">
-                                <h2 className="font-bold text-lg">Total: ${carrito?.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
+                                <h2 className="font-bold text-lg">Total: ${carrito.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0).toLocaleString()}</h2>
                                 <div className={`flex flex-row items-center gap-1 my-2`}>
                                         <img
                                             src={moneda}
@@ -126,7 +126,7 @@ const NavBar = () => {
                                         />
                                         <span className={`text-sm text-blue-500 font-bold block`}>Por tu compra recibes {carrito?.reduce((acc, curr) => acc + curr.precio * curr.cantidad, 0)/1000} puntos</span>
                                     </div>
-                                {/* {carrito?.length > 0 ? <a
+                                {carrito?.length > 0 ? <a
                                     href={`https://api.whatsapp.com/send/?phone=573022536253&text=Detalles del pedido%0A%0A${carrito.reduce(
                                         (acc, curr) => acc + `${curr.nombreTienda} - ${curr.nombre} x${curr.cantidad}%0A`,
                                         ""
@@ -134,7 +134,7 @@ const NavBar = () => {
                                     target="_blank"
                                 >
                                     <Button className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>
-                                </a>: <Button disabled className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>} */}
+                                </a>: <Button disabled className="mt-2 w-full bg-blue-500 hover:bg-blue-600">Hacer pedido</Button>}
                             </div>
                     </SheetContent>
                 </Sheet>
