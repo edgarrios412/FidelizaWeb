@@ -50,7 +50,7 @@ const Login = () => {
                     // href="/fidelizaV2.aab" download target="_blank" 
                     onClick={() => toast({
                         variant: "destructive",
-                        title: "Link no disponible"
+                        title: "Proximamente"
                     })}
                     className="mt-16 bg-white px-6 py-3 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
                     <img className={"h-14"} src={favicon} />

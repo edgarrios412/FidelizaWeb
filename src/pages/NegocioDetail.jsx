@@ -162,7 +162,7 @@ const NegocioDetail = () => {
                             // href="/fidelizaV2.aab" download target="_blank"
                             onClick={() => toast({
                                 variant: "destructive",
-                                title: "Link no disponible"
+                                title: "Proximamente"
                             })}
                             className="bg-blue-500 px-6 py-4 rounded-xl shadow-sm flex gap-4 items-center cursor-pointer">
                             <img className={"h-14"} src={favicon} />

@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import Login from "./pages/Login";
 import NegocioDetail from "./pages/NegocioDetail";
 import { CarritoContext } from "./utils/context/Carrito/CarritoContext";
+import Admin from "./pages/Admin";
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/cwaicamxncfau" element={<Admin />} />
         <Route path="/negocio/:id" element={<NegocioDetail />} />
       </Routes>
     </>
