@@ -23,7 +23,7 @@ export const CarritoProvider = ({ children }) => {
     const agregarCarrito = (producto) => {
         // const nombreTienda = tiendas.find(t => t.id == producto.tiendaId).nombre
         if (carrito?.length) {
-            const productoBuscado = carrito.find(c => c.productoId == producto.productoId && c.tiendaId == producto.tiendaId);
+            const productoBuscado = carrito?.find(c => c.productoId == producto.productoId && c.tiendaId == producto.tiendaId);
             if (productoBuscado) {
                 productoBuscado.cantidad++;
                 setCarrito([...carrito])
@@ -37,7 +37,7 @@ export const CarritoProvider = ({ children }) => {
 
     const quitarDelCarrito = (producto) => {
         if (carrito?.length) {
-            const productoBuscado = carrito.find(c => c.productoId == producto.productoId && c.tiendaId == producto.tiendaId);
+            const productoBuscado = carrito?.find(c => c.productoId == producto.productoId && c.tiendaId == producto.tiendaId);
             console.log(productoBuscado)
             if (productoBuscado?.cantidad > 1) {
                 productoBuscado.cantidad--;

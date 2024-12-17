@@ -191,7 +191,7 @@ const NegocioDetail = () => {
                                         <h2 className="font-bold mb-4">${p.value.toLocaleString()} </h2>
                                         <div className="flex gap-2 items-center justify-center">
                                             <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => quitarDelCarrito({ productoId: p.id, tiendaId: id })}>-</Button>
-                                            <p className="font-bold">{carrito.find(c => c.tiendaId == id && c.productoId == p.id)?.cantidad ?? 0}</p>
+                                            <p className="font-bold">{carrito?.find(c => c.tiendaId == id && c.productoId == p.id)?.cantidad ?? 0}</p>
                                             <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => agregarCarrito({ productoId: p.id, tiendaId: id, cantidad: 1, imagen: p.image, precio: p.value, nombre: p.name, nombreTienda: negocio.name })}>+</Button>
                                         </div>
                                     </div>
