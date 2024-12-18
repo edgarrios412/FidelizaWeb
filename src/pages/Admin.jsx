@@ -25,16 +25,18 @@ const Admin = () => {
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState([])
 
+    const [user, setUser] = useState([])
+
     useEffect(() => {
         axios.get("/negocio/0").then(({ data }) => { setNegocios(data); setNegociosAll(data) })
     }, [])
 
     useEffect(() => {
-        axios.get("/negocio/getUserNegocio/"+ negocioId).then(({ data }) => { setUsers(data)})
-    },[negocioId])
+        axios.get("/negocio/getUserNegocio/" + negocioId).then(({ data }) => { setUsers(data) })
+    }, [negocioId])
 
     const editarImagen = () => {
-        axios.put("/negocio/edit", {negocioId, url}).then(({ data }) => {
+        axios.put("/negocio/edit", { negocioId, url }).then(({ data }) => {
             toast({
                 variant: "default",
                 title: "Edicion exitosa",
@@ -48,21 +50,17 @@ const Admin = () => {
         })
     }
 
-    const buscarUsuario = () => {
-        if (phone?.length < 10) {
-            setNegocios(negociosAll)
-            return toast({
-                variant: "destructive",
-                title: "Ingresa un número válido",
+    const buscarUsuario = (phone) => {
+        axios.get("/negocio/byUserPhone/" + phone).then(({ data }) => {
+            toast({
+                variant: "default",
+                title: `Tiene ${data.find(n => n.id == negocioId).userNegocioPoints?.puntos} puntos`
             })
-        }
-        setLoading(true)
-        axios.get("/negocio/byUserPhone/" + phone).then(({ data }) => { setNegocios(data); setLoading(false) }, (e) => {
-            setLoading(false)
+        }, (e) => {
             toast({
                 variant: "destructive",
                 title: e.response.data
-            }); setNegocios(negociosAll)
+            })
         })
     }
 
@@ -152,7 +150,7 @@ const Admin = () => {
                         </div>
                         <div>
                             <span className="font-semibold text-base text-[#222B45]">
-                                {n.name} (ID: {n.id})
+                                {n.name}
                             </span>
                         </div>
                     </div>
@@ -165,13 +163,11 @@ const Admin = () => {
                 </span>}
                 {users?.length > 0 && users?.map(n => <div
                     key={n.id}
-                    onClick={() => setPhone(n.phone)}
+                    onClick={() => {setPhone(n.phone); buscarUsuario(n.phone)}}
                     className="mb-2 cursor-pointer pr-4 flex flex-row items-center justify-between gap-4 bg-white px-4 py-3 rounded-lg shadow-sm"
                 >
-                    <a href={`https://api.whatsapp.com/send/?phone=${n.countryCode}${n.phone}&text=Hola ${n.name}`}>
-                    <div className="flex flex-row gap-4 items-center">
+                    <div className="flex flex-row gap-4 items-center w-full">
                         <div className="relative w-10 h-10 rounded-full">
-                            {isLoading && <Skeleton circle className="absolute top-0 left-0 w-full h-full" />}
                             <img
                                 src={"https://static.vecteezy.com/system/resources/thumbnails/005/545/335/small/user-sign-icon-person-symbol-human-avatar-isolated-on-white-backogrund-vector.jpg"}
                                 onLoad={() => { setIsLoading(false) }}
@@ -179,13 +175,17 @@ const Admin = () => {
                                     }`}
                             />
                         </div>
-                        <div>
+                        <div className="flex flex-row justify-between w-full items-center">
                             <span className="font-semibold text-base text-[#222B45]">
                                 {n.name ?? "Desconocido"} (Telefono: {n.phone})
                             </span>
+                            <a href={`https://api.whatsapp.com/send/?phone=${n.countryCode}${n.phone}&text=Hola ${n.name}`}>
+                                <button className="bg-blue-200 px-4 py-1 rounded-md text-blue-600 font-bold flex flex-col items-center">
+                                    Enviar
+                                </button>
+                            </a>
                         </div>
                     </div>
-                    </a>
                     {/* <ArrowRight size={18} color="gray" /> */}
                 </div>)}
             </div>

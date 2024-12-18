@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import ProductDetail from "./ProductDetail"
+import { ColorExtractor } from "react-color-extractor"
 
 const NegocioDetail = () => {
 
@@ -20,6 +21,8 @@ const NegocioDetail = () => {
     const [negocio, setNegocio] = useState([])
     const [productSelected, setProductSelected] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
+    const [primaryColor, setPrimaryColor] = useState(null)
+
     const { carrito, setCarrito, agregarCarrito, quitarDelCarrito } = useContext(CarritoContext)
 
     useEffect(() => {
@@ -28,14 +31,14 @@ const NegocioDetail = () => {
 
     const { toast } = useToast()
 
-    if(productSelected) return <ProductDetail product={productSelected} id={id} nombreTienda={negocio.name} volver={() => setProductSelected(null)}/>
+    if (productSelected) return <ProductDetail product={productSelected} id={id} nombreTienda={negocio.name} volver={() => setProductSelected(null)} />
 
     return (
         <>
             {negocio && <div className={`bg-[#f2f5ff] h-100%`}>
                 {/* TAREA: TESTEAR SI FUNCIONA */}
-                <div className={`bg-blue-500 w-full h-56 absolute`}>
-                    {/* {negocio?.background.at(0) != "#" && <img className={`w-full h-full`} src={negocio.background} />} */}
+                <div className={`w-full h-56 absolute transition-all`} style={{ backgroundColor: primaryColor ?? "#3b82f6" }}>
+                    {negocio?.background?.at(0) !== "#" && <img className={`w-full h-full`} src={negocio.background} />}
                 </div>
                 <div className={`flex flex-row items-center justify-between  px-6 py-4`}>
                     <button
@@ -55,64 +58,43 @@ const NegocioDetail = () => {
                         className={`flex flex-col z-30 justify-center items-center w-full rounded-lg overflow-hidden py-3 my-3`}
                     >
                         <div className="relative w-28 h-28 rounded-full">
-                        {isLoading && <Skeleton circle className="absolute top-0 left-0 w-full h-full bg-gray-200 border-4 border-white"/>}
-                        <img
-                            src={negocio.image}
-                            onLoad={() => {setIsLoading(false)}}
-                            className={`w-full h-full object-cover rounded-full border-4 border-white transition-opacity duration-500 ${
-                                isLoading ? "opacity-0" : "opacity-100"
-                              }`}
-                        />
+                            {isLoading && <Skeleton circle className="absolute top-0 left-0 w-full h-full bg-gray-200 border-4 border-white" />}
+                            <ColorExtractor getColors={(e) => setPrimaryColor(e[0])}>
+                            <img
+                                src={negocio.image}
+                                onLoad={() => { setIsLoading(false) }}
+                                className={`w-full h-full object-cover rounded-full border-4 border-white transition-opacity duration-500 ${isLoading ? "opacity-0" : "opacity-100"
+                                    }`}
+                            />
+                            </ColorExtractor>
                         </div>
                         {/* <div className={`bg-transparent`}> */}
                         <div className="relative h-7 mt-2 w-36 text-center">
-                        {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1"/>}
-                        <span className={`font-semibold text-xl mt-2 text-black transition-opacity duration-500 ${
-                                isLoading ? "opacity-0" : "opacity-100"
-                              }`}>
-                            {negocio.name}
-                        </span>
+                            {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1" />}
+                            <span className={`font-semibold text-xl mt-2 text-black transition-opacity duration-500 ${isLoading ? "opacity-0" : "opacity-100"
+                                }`}>
+                                {negocio.name}
+                            </span>
                         </div>
                         {/* <span className={`font-semibold text-xl mt-2 text-black`}>
                             {negocio.name}
                         </span> */}
                         <div className="relative h-5 my-1 flex flex-col items-center w-64">
-                        {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1"/>}
-                        <span className={`font-semibold text-sm mt-1 text-slate-600 transition-opacity duration-500 ${
-                                isLoading ? "opacity-0" : "opacity-100"
-                              }`}>
-                            {negocio.direction}
-                        </span>
+                            {isLoading && <Skeleton className="absolute top-0 left-0 w-full h-full my-1" />}
+                            <span className={`font-semibold text-sm mt-1 text-slate-600 transition-opacity duration-500 ${isLoading ? "opacity-0" : "opacity-100"
+                                }`}>
+                                {negocio.direction}
+                            </span>
                         </div>
                         {/* <span className={`font-semibold text-sm mt-1 text-slate-600`}>
                             {negocio.direction}
                         </span> */}
-                        <div className="relative h-5 my-1 flex flex-col items-center w-36">
-                        {/* {isLoading && <Skeleton className="absolute top-0 left-0 h-full my-1 w-full"/>}
-                        <div className={`text-slate-600 flex flex-row mt-0 gap-1 items-center transition-opacity duration-500 ${
-                                isLoading ? "opacity-0" : "opacity-100"
-                              }`}>
-                            <Phone size={12} />
-                            <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
-                        </div> */}
-                        </div>
                         {/* <div className={`text-slate-600 flex flex-row mt-1 gap-1 items-center`}>
                             <Phone size={12} />
                             <span className={`font-medium text-sm mt-0 text-slate-600`}>{negocio.phone}</span>
                         </div> */}
                     </div>
                     <div className={`flex flex-row gap-4 justify-center mb-8 w-full`}>
-                        {/* <a
-                            target="_blank"
-                            href={`https://wa.me/${negocio.countryCode}${negocio.phone}`}
-                            className={`cursor-pointer flex flex-row gap-2 justify-center items-center bg-green-200 rounded-lg px-3 py-1`}
-                        >
-                            <Mails
-                                size={16}
-                                color="green"
-                            />
-                            <span className={`font-semibold text-green-600 text-sm mt-0`}>Contactar</span>
-                        </a> */}
                         <a
                             href={`https://wa.me/573022536253?text=Hola, quisiera reportar un error en el negocio: ${negocio.name}`}
                             target="_blank"
@@ -179,23 +161,23 @@ const NegocioDetail = () => {
                         {/* <span className={`text-gray-500 mb-1`}>A continuación verás una lista de articulos o descuentos que puedes obtener con tus puntos acumulados</span> */}
                         <div className={`flex flex-row gap-3 my-4`}>
                             {negocio?.products?.filter(p => !p.onlyClaimable).map(p => <div className="flex-col items-center max-w-40 lg:w-96 rounded-lg shadow-md bg-white dark:bg-[#262635] shadow-slate-200 dark:shadow-gray-900 pb-4">
-                                    <div onClick={() => setProductSelected(p)} className="cursor-pointer rounded-lg w-28 h-28 overflow-hidden m-auto">
-                                        <img src={p.image} alt="Imagen" className="object-cover h-full m-auto" />
+                                <div onClick={() => setProductSelected(p)} className="cursor-pointer rounded-lg w-28 h-28 overflow-hidden m-auto">
+                                    <img src={p.image} alt="Imagen" className="object-cover h-full m-auto" />
+                                </div>
+                                <div className="text-left px-6">
+                                    {/* <p className="text-slate-500 mb-2">El mejor pollo de la ciudad</p> */}
+                                    <div className="flex">
+                                        {/* <Timer className="w-4 h-4 text-slate-500 mr-1" /> */}
+                                        <p className="text-sm my-1">{p.name}</p>
                                     </div>
-                                    <div className="text-left px-6">
-                                        {/* <p className="text-slate-500 mb-2">El mejor pollo de la ciudad</p> */}
-                                        <div className="flex">
-                                            {/* <Timer className="w-4 h-4 text-slate-500 mr-1" /> */}
-                                            <p className="text-sm my-1">{p.name}</p>
-                                        </div>
-                                        <h2 className="font-bold mb-4">${p.value.toLocaleString()} </h2>
-                                        <div className="flex gap-2 items-center justify-center">
-                                            <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => quitarDelCarrito({ productoId: p.id, tiendaId: id })}>-</Button>
-                                            <p className="font-bold">{carrito?.find(c => c.tiendaId == id && c.productoId == p.id)?.cantidad ?? 0}</p>
-                                            <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => agregarCarrito({ productoId: p.id, tiendaId: id, cantidad: 1, imagen: p.image, precio: p.value, nombre: p.name, nombreTienda: negocio.name })}>+</Button>
-                                        </div>
+                                    <h2 className="font-bold mb-4">${p.value.toLocaleString()} </h2>
+                                    <div className="flex gap-2 items-center justify-center">
+                                        <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => quitarDelCarrito({ productoId: p.id, tiendaId: id })}>-</Button>
+                                        <p className="font-bold">{carrito?.find(c => c.tiendaId == id && c.productoId == p.id)?.cantidad ?? 0}</p>
+                                        <Button className="h-6 w-full bg-blue-500 font-bold text-base hover:bg-blue-600" onClick={() => agregarCarrito({ productoId: p.id, tiendaId: id, cantidad: 1, imagen: p.image, precio: p.value, nombre: p.name, nombreTienda: negocio.name })}>+</Button>
                                     </div>
-                                </div>)}
+                                </div>
+                            </div>)}
                         </div>
                     </div>
                     {negocio?.products?.filter(p => (!p.onlyClaimable && p.price) || p.onlyClaimable)?.length > 0 && <span className={`font-bold text-lg text-[#222B45] mb-1 block`}>
