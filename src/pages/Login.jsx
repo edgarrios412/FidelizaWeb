@@ -5,7 +5,7 @@ import favicon from "/favicon.png"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, BadgeCheck } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import Spinner from "@/components/Spinner"
 import Skeleton from 'react-loading-skeleton'
@@ -109,8 +109,9 @@ const Login = () => {
                         />
                         </div>
                         <div>
-                            <span className="font-semibold text-base text-[#222B45]">
-                                {n.name}
+                            <span className="font-semibold text-base text-[#222B45] flex gap-2 items-center">
+                                {n.name} 
+                                {/* <BadgeCheck size={16} className="text-blue-500"/> */}
                             </span>
                             <div className="flex flex-row items-center gap-1">
                                 <img
